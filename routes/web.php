@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Attendance\ImportAttendanceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function(){
         Route::post('role-permission/{id}', App\Http\Controllers\Admin\Authorization\RolePermissionController::class)->name('role-permission');
         Route::resource('permission', App\Http\Controllers\Admin\Authorization\PermissionController::class)->except('show', 'update', 'create');
     });
+
+    Route::resource('attendance', App\Http\Controllers\Admin\Attendance\AttendanceController::class)->except('show', 'update', 'create');
+    Route::post('attendance/import', ImportAttendanceController::class)->name('attendance.import');
 });
 
 
