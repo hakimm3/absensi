@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         $data = [
             [   
-                'department_id' => 1,
+                // 'department_id' => 1,
                 'name' => 'Admin',
                 'username' => 'admin',
                 'email' => 'admin@gmail.com',
