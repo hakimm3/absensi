@@ -75,6 +75,11 @@
                         error_message += '<li>' + value + '</li>'
                     })
                     error_message += '</ul>'
+
+                    if(error_message == '<ul></ul>') {
+                        error_message = data.responseJSON.message
+                    }
+
                     Swal.fire({
                         title: 'Error!',
                         html: error_message,

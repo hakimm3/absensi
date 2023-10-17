@@ -38,8 +38,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Employee ID</th>
-                                <th>Name</th>
+                                <th>Employee No</th>
+                                <th>Employee Name</th>
                                 <th>Date</th>
                                 <th>Time In</th>
                                 <th>Max Time In</th>
@@ -56,7 +56,15 @@
                                     <td>{{ Carbon\Carbon::parse($item->date)->format('d M Y') }}</td>
                                     <td>{{ $item->time_in }}</td>
                                     <td>{{ $item->max_time_in }}</td>
-                                    <td>{{ $item->status }}</td>
+                                    <td> 
+                                        @if ($item->status == 'late')
+                                            <span class="badge badge-danger">Late</span>
+                                            @elseif ($item->status == 'present')
+                                            <span class="badge badge-success">Present</span>
+                                            @else 
+                                            <span class="badge badge-warning"> {{ $item->status }} </span>
+                                        @endif
+                                    </td>
                                     <td> @include('admin.attendance.action') </td>
                                 </tr>
                             @endforeach
@@ -134,6 +142,15 @@
     <script src="{{ asset('asset_template/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('asset_template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 
+    {{-- export datatable to excel --}}
+    <script src="{{ asset('asset_template/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('asset_template/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('asset_template/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('asset_template/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('asset_template/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('asset_template/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('asset_template/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+
     {{-- select2 --}}
     <script src="{{ asset('asset_template/plugins/select2/js/select2.min.js') }}"></script>
 
@@ -146,7 +163,18 @@
             responsive: true,
             autoWidth: false,
             serverSide: false,
-        })
+            // export to excel except last column and file name is attendance
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    },
+                    title: 'Attendance'
+                }
+            ]
+        });
 
         $("#date").daterangepicker({
             singleDatePicker: false,
