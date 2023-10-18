@@ -2,11 +2,11 @@
 @section('content')
     <x-admin.layout-component>
         @slot('pageHeader')
-            User
+            Employee Attendance
         @endslot
         @slot('breadcrumb')
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">User</li>
+            <li class="breadcrumb-item active">Employee Attendance</li>
         @endslot
         @slot('content')
             <div class="card">
