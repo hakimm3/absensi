@@ -58,7 +58,10 @@ class AttendanceController extends Controller
             ]);
         }
 
-        $status = $request->time_in > $request->max_time_in ? 'late' : 'present';
+        $time_in = Carbon::parse($request->time_in);
+        $max_time_in = Carbon::parse($request->max_time);
+
+        $status = $time_in->gt($max_time_in) ? 'late' : 'present';
 
         $data = Attendance::create([
             'user_id' => $user->id,
