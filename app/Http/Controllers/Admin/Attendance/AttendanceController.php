@@ -63,14 +63,14 @@ class AttendanceController extends Controller
 
         $status = $time_in->gt($max_time_in) ? 'late' : 'present';
 
-        $data = Attendance::create([
+        $data = Attendance::updateOrCreate([
             'user_id' => $user->id,
             'date' => Carbon::parse($request->date)->format('Y-m-d'),
+        ],[
             'time_in' => $request->time_in,
             'max_time_in' => $request->max_time,
             'status' => $status,
         ]);
-        
 
         return response()->json([
             'message' => 'Data saved successfully',
