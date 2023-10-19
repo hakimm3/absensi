@@ -22,10 +22,11 @@ class AttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'employee_id' => 'required',
             'date' => 'required',
             'time_in' => 'required',
             'max_time' => 'required',
+            'status' => 'required',
         ];
     }
 }

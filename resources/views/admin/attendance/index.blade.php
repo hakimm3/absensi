@@ -21,8 +21,9 @@
                                 <select name="status" id="status" class="form-control">
                                     <option value="">-- Status --</option>
                                     <option value="">All</option>
+                                    <option value="present" {{ (request()->status == 'present') ? 'selected' : '' }}>Present</option>
                                     <option value="late" {{ (request()->status == 'late') ? 'selected' : '' }}>Late</option>
-                                    <option value="not_late">Not Late</option>
+                                    <option value="absent" {{ (request()->status == 'absent') ? 'selected' : '' }}>Absent</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
@@ -58,11 +59,13 @@
                                     <td>{{ $item->max_time_in }}</td>
                                     <td> 
                                         @if ($item->status == 'late')
-                                            <span class="badge badge-danger">Late</span>
+                                            <span class="badge badge-warning">Late</span>
                                             @elseif ($item->status == 'present')
                                             <span class="badge badge-success">Present</span>
+                                            @elseif ($item->status == 'absent')
+                                            <span class="badge badge-danger">Absent</span>
                                             @else 
-                                            <span class="badge badge-warning"> {{ $item->status }} </span>
+                                            <span class="badge badge-info"> {{ $item->status }} </span>
                                         @endif
                                     </td>
                                     <td> @include('admin.attendance.action') </td>
@@ -87,13 +90,13 @@
                 <div class="modal-body">
                     <form action="" id="form" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="">Name</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Employee No</label>
-                            <input type="number" name="employee_id" id="employee_id" class="form-control"
-                                placeholder="Employee No">
+                            <label for="">Employee</label>
+                            <select name="employee_id" id="employee_id" class="form-control">
+                                <option value="">-- Employee --</option>
+                                @foreach ($users as $item)
+                                    <option value="{{ $item->employee_id }}">{{ $item->employee_id }} - {{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="">Date</label>
@@ -107,7 +110,16 @@
                             <label for="">Max Time In</label>
                             <input type="time" name="max_time" id="max_time" class="form-control" placeholder="Max Time In">
                         </div>
-                       
+                       <div class="form-group">
+                        <label for="">Status</label>
+                        <select name="status" class="form-control" id="status_attendance">
+                            <option value="">-- Status --</option>
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                            <option value="late">Late</option>
+                            <option value="halfday">Halfday</option>
+                        </select>
+                       </div>
                         <input type="hidden" name="id" id="id">
                     </form>
                 </div>
@@ -176,7 +188,7 @@
             ]
         });
 
-        $("#date").daterangepicker({
+       let datepicker =  $("#date").daterangepicker({
             singleDatePicker: false,
             showDropdowns: true,
             allowClear: true,
@@ -185,10 +197,19 @@
             }
         });
 
-        // if request()->date is not null then set the value
         @if (request()->date)
-            $('#date').val('{{ request()->date }}')
+            let initialDate = "{{ request()->date }}".split(' - ')
+            let date = initialDate[0] + ' - ' + initialDate[1]  
+            datepicker.data('daterangepicker').setStartDate(initialDate[0])
+            datepicker.data('daterangepicker').setEndDate(initialDate[1])
         @endif
+
+
+        $("#employee_id").select2({
+            theme: 'bootstrap4',
+            placeholder: '-- Employee --',
+            allowClear: true,
+        });
         
 
         function destroy(id) {

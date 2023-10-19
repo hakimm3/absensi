@@ -31,7 +31,9 @@ class AttendanceController extends Controller
             return $query->where('status', $status);
         })
         ->latest()->get();
-        return view('admin.attendance.index', compact('data'));
+
+        $users = User::all();
+        return view('admin.attendance.index', compact('data', 'users'));
     }
 
     /**
@@ -47,29 +49,15 @@ class AttendanceController extends Controller
      */
     public function store(AttendanceRequest $request)
     {
-           $user = User::where('employee_id', $request->employee_id)->first();
-        if(!$user){
-            $user = User::create([
-                'name' => $request->name,
-                'username' => $request->employee_id,
-                'email' => Str::slug($request->employee_id) . '@example.com',
-                'password' => bcrypt('password'),
-                'employee_id' => $request->employee_id,
-            ]);
-        }
-
-        $time_in = Carbon::parse($request->time_in);
-        $max_time_in = Carbon::parse($request->max_time);
-
-        $status = $time_in->gt($max_time_in) ? 'late' : 'present';
-
+        $user = User::where('employee_id', $request->employee_id)->first();
+      
         $data = Attendance::updateOrCreate([
             'user_id' => $user->id,
             'date' => Carbon::parse($request->date)->format('Y-m-d'),
         ],[
             'time_in' => $request->time_in,
             'max_time_in' => $request->max_time,
-            'status' => $status,
+            'status' => $request->status,
         ]);
 
         return response()->json([

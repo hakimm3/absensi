@@ -18,11 +18,11 @@
                 dataType: "JSON",
                 success: function(data) {
                     $('#id').val(data.data.id)
-                    $('#name').val(data.data.user.name)
-                    $('#employee_id').val(data.data.user.employee_id)
+                    $('#employee_id').val(data.data.user.employee_id).trigger('change')
                     $('#date-input').val(data.data.date)
                     $('#time_in').val(data.data.time_in)
                     $('#max_time').val(data.data.max_time_in)
+                    $('#status_attendance').val(data.data.status).trigger('change')
                 },
                 error: function() {
                     Swal.fire({
@@ -40,12 +40,12 @@
         function store(){
             var formData = new FormData()
             formData.append('id', $('#id').val())
-            formData.append('name', $('#name').val())
             formData.append('employee_id', $('#employee_id').val())
             formData.append('date', $('#date-input').val())
             formData.append('time_in', $('#time_in').val())
             formData.append('max_time', $('#max_time').val())
-
+            formData.append('status', $("#status_attendance").val())
+            // formData.append('status', $("#status").val()
 
             $.ajax({
                 url: "{{ route('attendance.store') }}",
