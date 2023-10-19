@@ -10,7 +10,7 @@
         @endslot
         @slot('content')
             <x-admin.box-component>
-                @slot('title')
+                @slot('boxHeader')
                     Dashboard
                 @endslot
                 @slot('boxBody')
@@ -58,7 +58,10 @@
 
         // if request()->date is not null then set the value
         @if (request()->date)
-            $('#date').val('{{ request()->date }}')
+            $('#date').daterangepicker({
+                startDate: '{{ request()->date }}'.split(' - ')[0],
+                endDate: '{{ request()->date }}'.split(' - ')[1]
+            });
         @endif
     </script>
 @endpush
