@@ -28,7 +28,11 @@
                                             </div>
                                         </div>
                                     </form>
-                                    @include('admin.dashboard.attendance')
+                                    <div class="row">
+                                        <div class="col-12">
+                                            @include('admin.dashboard.attendance')
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +48,6 @@
 @endpush
 
 @push('js')
-
 <script src="{{ asset('asset_template/plugins/moment/moment.min.js') }}"></script>
 <script  src="{{ asset('asset_template/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script>

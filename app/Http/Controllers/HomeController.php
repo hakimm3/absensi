@@ -36,18 +36,26 @@ class HomeController extends Controller
             foreach ($attendance as $key => $value) {
                 $attendanceResult [] = [
                     'month_year' => $value->month_year,
-                    'late' => $value->status == 'late' ? $value->total : 0,
                     'present' => $value->status == 'present' ? $value->total : 0,
+                    'late' => $value->status == 'late' ? $value->total : 0,
                     'absent' => $value->status == 'absent' ? $value->total : 0,
+                    'skd' => $value->status == 'skd' ? $value->total : 0,
+                    'cuti tahunan' => $value->status == 'cuti tahunan' ? $value->total : 0,
+                    'cuti istimewa' => $value->status == 'cuti istimewa' ? $value->total : 0,
+                    'rawat inap' => $value->status == 'rawat inap' ? $value->total : 0,
                 ];
             }
 
             $attendanceResult = collect($attendanceResult)->groupBy('month_year')->map(function ($item) {
                 return [
                     'month_year' => $item->first()['month_year'],
-                    'late' => $item->sum('late'),
                     'present' => $item->sum('present'),
+                    'late' => $item->sum('late'),
                     'absent' => $item->sum('absent'),
+                    'skd' => $item->sum('skd'),
+                    'cuti tahunan' => $item->sum('cuti tahunan'),
+                    'cuti istimewa' => $item->sum('cuti istimewa'),
+                    'rawat inap' => $item->sum('rawat inap'),
                 ];
             })->values();
 

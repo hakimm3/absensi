@@ -1,83 +1,137 @@
-<canvas id="linechart" width="400" height="100"></canvas>
+<!-- HTML -->
+<div id="chartdiv"></div>
+
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
 
 @push('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-        integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Resources -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+    <!-- Chart code -->
     <script>
-       
-    </script>
-    <script>
-        const chart_1 = document.getElementById('linechart');
-        var labels = [];
-        var present = [];
-        var late = [];
-
-        @foreach ($attendanceResult as $item)
-            labels.push('{{ $item['month_year'] }}');
-            present.push({{ $item['present'] }});
-            late.push({{ $item['late'] }});
-        @endforeach
+        am5.ready(function() {
+            // Create root element
+            // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+            var root = am5.Root.new("chartdiv");
 
 
-        // const labels = ['January 2022', 'February 2022', 'March 2022', 'April 2022', 'May 2022', 'June 2022', 'July 2022'];
-        const data = {
-            labels: labels,
-            datasets: [{
-                    label: 'Present',
-                    data: present,
-                    borderColor: "#ff0000",
-                    backgroundColor: "#ff0000",
-                    yAxisID: 'y',
-                },
-                {
-                    label:  'Late',
-                    data: late,
-                    borderColor: "#0000ff",
-                    backgroundColor: "#0000ff",
-                    yAxisID: 'y1',
-                }
-            ]
-        };
+            // Set themes
+            // https://www.amcharts.com/docs/v5/concepts/themes/
+            root.setThemes([
+                am5themes_Animated.new(root)
+            ]);
 
 
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                stacked: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Attendance Chart'
-                    }
-                },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-
-                        // grid line settings
-                        grid: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                        },
-                    },
-                }
-            },
-        };
+            // Create chart
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/
+            var chart = root.container.children.push(am5xy.XYChart.new(root, {
+                panX: false,
+                panY: false,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root.verticalLayout
+            }));
 
 
-        const linechart = new Chart(chart_1, config);
+            // Add legend
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+            var legend = chart.children.push(
+                am5.Legend.new(root, {
+                    centerX: am5.p50,
+                    x: am5.p50
+                })
+            );
+            
+            var data = @json($attendanceResult)
+
+
+            // Create axes
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+            var xRenderer = am5xy.AxisRendererX.new(root, {
+                cellStartLocation: 0.1,
+                cellEndLocation: 0.9
+            })
+
+            var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                categoryField: "month_year",
+                renderer: xRenderer,
+                tooltip: am5.Tooltip.new(root, {})
+            }));
+
+            xRenderer.grid.template.setAll({
+                location: 1
+            })
+
+            xAxis.data.setAll(data);
+
+            var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+                renderer: am5xy.AxisRendererY.new(root, {
+                    strokeOpacity: 0.1
+                })
+            }));
+
+
+            // Add series
+            // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+            function makeSeries(name, fieldName) {
+                var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueYField: fieldName,
+                    categoryXField: "month_year"
+                }));
+
+                series.columns.template.setAll({
+                    tooltipText: "{name}, {categoryX}:{valueY}",
+                    width: am5.percent(90),
+                    tooltipY: 0,
+                    strokeOpacity: 0
+                });
+
+                series.data.setAll(data);
+
+                // Make stuff animate on load
+                // https://www.amcharts.com/docs/v5/concepts/animations/
+                series.appear();
+
+                series.bullets.push(function() {
+                    return am5.Bullet.new(root, {
+                        locationY: 0,
+                        sprite: am5.Label.new(root, {
+                            text: "{valueY}",
+                            fill: root.interfaceColors.get("alternativeText"),
+                            centerY: 0,
+                            centerX: am5.p50,
+                            populateText: true
+                        })
+                    });
+                });
+
+                legend.data.push(series);
+            }
+
+            makeSeries("Present", "present");
+            makeSeries("Absent", "absent");
+            makeSeries("Late", "late");
+            makeSeries("SKD", "skd");
+            makeSeries("Cuti Tahunan", "cuti tahunan");
+            makeSeries("Cuti Istimewa", "cuti istimewa");
+            makeSeries("Rawat Inap", "rawat inap");
+            
+
+
+            // Make stuff animate on load
+            // https://www.amcharts.com/docs/v5/concepts/animations/
+            chart.appear(1000, 100);
+
+        }); // end am5.ready()
     </script>
 @endpush
