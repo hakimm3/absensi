@@ -11,8 +11,13 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('storage/user/' . auth()->user()->photo) }}"
-                    class="img-circle elevation-2" alt="User Image">
+                {{-- @if (auth()->user()->photo != null)
+                    <img src="{{ asset('storage/user/' . auth()->user()->photo) }}" class="img-circle elevation-2"
+                        width="50px" alt="User Image">
+                @else --}}
+                    <img src="{{ asset('asset_template/dist/img/avatar.png') }}" class="img-circle elevation-2"
+                        width="50px" alt="User Image">
+                {{-- @endif --}}
             </div>
             <div class="info">
                 <a href="{{ route('profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
@@ -46,7 +51,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('attendance.index') }}" class="nav-link {{ request()->is('attendance') ? 'active' : '' }}">
+                    <a href="{{ route('attendance.index') }}"
+                        class="nav-link {{ request()->is('attendance') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-pen"></i>
                         <p>
                             Attendance
@@ -67,8 +73,7 @@
                             Logout
                         </p>
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                        class="d-none">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
 

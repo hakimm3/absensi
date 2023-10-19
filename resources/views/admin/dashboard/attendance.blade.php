@@ -9,24 +9,6 @@
     </script>
     <script>
         const chart_1 = document.getElementById('linechart');
-        // const linechart = new Chart(chart_1, {
-        //     type: 'line',
-        //     data: {
-        //         labels: data_label,
-        //         datasets: [{
-        //             label: 'Jumlah Late Attendance',
-        //             data: data_bulan,
-        //             fill: false,
-        //             borderColor: 'rgb(75, 192, 192)',
-        //             tension: 0.1
-        //         }]
-        //     },
-        //     options: {
-        //         backgroundColor: '#999',
-        //         borderColor: 'rgb(75, 192, 192)',
-        //     }
-        // });
-
         var labels = [];
         var present = [];
         var late = [];

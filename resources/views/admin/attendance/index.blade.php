@@ -23,11 +23,13 @@
                                         <select name="status" id="status" class="form-control">
                                             <option value="">-- Status --</option>
                                             <option value="">All</option>
-                                            <option value="present" {{ request()->status == 'present' ? 'selected' : '' }}>Present
-                                            </option>
+                                            <option value="present" {{ request()->status == 'present' ? 'selected' : '' }}>Present </option>
                                             <option value="late" {{ request()->status == 'late' ? 'selected' : '' }}>Late</option>
-                                            <option value="absent" {{ request()->status == 'absent' ? 'selected' : '' }}>Absent
-                                            </option>
+                                            <option value="absent" {{ request()->status == 'absent' ? 'selected' : '' }}>Absent</option>
+                                            <option value="skd" {{ request()->status == 'skd' ? 'selected' : '' }}>SKD</option>
+                                            <option value="cuti tahunan" {{ request()->status == 'cuti tahunan' ? 'selected' : '' }}>Cuti Tahunan</option>
+                                            <option value="cuti istimewa" {{ request()->status == 'cuti istimewa' ? 'selected' : '' }}>Cuti Istimewa</option>
+                                            <option value="rawat inap" {{ request()->status == 'rawat inap' ? 'selected' : '' }}>Rawat Inap</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-3">
@@ -114,7 +116,10 @@
                         <option value="present">Present</option>
                         <option value="absent">Absent</option>
                         <option value="late">Late</option>
-                        <option value="halfday">Halfday</option>
+                        <option value="skd">SKD</option>
+                        <option value="cuti tahunan">Cuti Tahunan</option>
+                        <option value="cuti istimewa">Cuti Istimewa</option>
+                        <option value="rawat inap">Rawat Inap</option>
                     </select>
                 </div>
                 <input type="hidden" name="id" id="id">
