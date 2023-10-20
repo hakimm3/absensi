@@ -48,7 +48,7 @@
             formData.append('file', $('#file').prop('files')[0] ?? '')
 
                 $.ajax({
-                url: "{{ route('attendance.import') }}",
+                url: "{{ route('employee.attendance.import') }}",
                 type: "POST",
                 dataType: "JSON",
                 data: formData,

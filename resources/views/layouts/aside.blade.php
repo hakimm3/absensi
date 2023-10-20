@@ -49,16 +49,9 @@
                         </p>
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('attendance.index') }}"
-                        class="nav-link {{ request()->is('attendance') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-pen"></i>
-                        <p>
-                            Attendance
-                        </p>
-                    </a>
-                </li>
+    
+                    {{-- employee --}}
+                @include('layouts.aside.aside-employee')
                 @include('layouts.aside.aside-setting')
                 @include('layouts.aside.aside-authorization')
                 @include('layouts.aside.aside-user_management')

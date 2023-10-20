@@ -10,7 +10,7 @@
         }
 
         function store() {
-            let url = "{{ route('attendance.store') }}"
+            let url = "{{ route('employee.attendance.store') }}"
             let method = "POST"
             let formData = new FormData($('#form')[0])
             let isServerSide = false
@@ -23,7 +23,7 @@
             $('#form').trigger('reset')
 
             $.ajax({
-                url: "{{ route('attendance.edit', ':id') }}".replace(':id', id),
+                url: "{{ route('employee.attendance.edit', ':id') }}".replace(':id', id),
                 type: "GET",
                 dataType: "JSON",
                 success: function(data) {

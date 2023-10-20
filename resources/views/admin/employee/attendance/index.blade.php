@@ -77,7 +77,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->description }}</td>
-                                    <td> @include('admin.attendance.action') </td>
+                                    <td> @include('admin.employee.attendance.action') </td>
                                 </tr>
                             @endforeach
                         @endslot
@@ -91,7 +91,7 @@
             Add Employee Attendance
         @endslot
         @slot('modalBody')
-            <form action="" id="form" enctype="multipart/form-data">
+            <form action="" id="form">
                 <div class="form-group">
                     <label for="">Employee</label>
                     <select name="employee_id" id="employee_id" class="form-control">
@@ -140,7 +140,7 @@
         @endslot
     </x-admin.modal-component>
 
-    @include('admin.attendance.import')
+    @include('admin.employee.attendance.import')
 @endsection
 
 
@@ -157,5 +157,5 @@
     @include('utils.create')
     @include('utils.store')
     @include('utils.destroy')
-    @include('admin.attendance.scripts')
+    @include('admin.employee.attendance.scripts')
 @endpush

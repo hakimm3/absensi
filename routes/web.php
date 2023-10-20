@@ -38,8 +38,13 @@ Route::middleware('auth')->group(function(){
         Route::resource('permission', App\Http\Controllers\Admin\Authorization\PermissionController::class)->except('show', 'update', 'create');
     });
 
-    Route::resource('attendance', App\Http\Controllers\Admin\Attendance\AttendanceController::class)->except('show', 'update', 'create');
-    Route::post('attendance/import', ImportAttendanceController::class)->name('attendance.import');
+    Route::prefix('employee')->as('employee.')->group(function(){
+        Route::resource('attendance', App\Http\Controllers\Admin\Attendance\AttendanceController::class)->except('show', 'update', 'create');
+        Route::post('attendance/import', ImportAttendanceController::class)->name('attendance.import');
+
+        Route::resource('minus-poin', App\Http\Controllers\Admin\Employee\MinusPoinController::class)->except('show', 'update', 'create');
+    });
+
 
     Route::prefix('setting')->as('setting.')->group(function(){
         Route::resource('mipo', App\Http\Controllers\Admin\Setting\MipoSettingControlller::class)->except('show', 'update', 'create');

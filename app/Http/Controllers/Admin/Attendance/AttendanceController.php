@@ -33,7 +33,7 @@ class AttendanceController extends Controller
         ->latest()->get();
 
         $users = User::all();
-        return view('admin.attendance.index', compact('data', 'users'));
+        return view('admin.employee.attendance.index', compact('data', 'users'));
     }
 
     /**

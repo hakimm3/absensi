@@ -10,7 +10,7 @@
       <li class="nav-item">
         <a href="{{ route('setting.mipo.index') }}" class="nav-link {{ request()->is('setting/mipo') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
-          <p>Mipo</p>
+          <p>Minus Poin</p>
         </a>
       </li>
     </ul>

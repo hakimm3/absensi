@@ -2,12 +2,12 @@
 @section('content')
     <x-admin.layout-component>
         @slot('pageHeader')
-            Mipo
+            Minus Poin
         @endslot
         @slot('breadcrumb')
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Setting</a></li>
-            <li class="breadcrumb-item active"><a href="#">Mipo</a></li>
+            <li class="breadcrumb-item active"><a href="#">Minus Poin</a></li>
         @endslot
         @slot('content')
             <x-admin.box-component>
@@ -28,7 +28,7 @@
 
     <x-admin.modal-component id="modal-form">
         @slot('modalTitle')
-            Add Mipo
+            Add Minus Poin
         @endslot
         @slot('modalBody')
             <form action="" id="form">
