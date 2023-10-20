@@ -13,8 +13,7 @@
 {{-- csrf --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 {{-- pace --}}
-<link rel="stylesheet" href="{{ asset('asset_template/plugins/pace-progress/themes/black/pace-theme-flat-top.css') }}">
-<link rel="stylesheet" href="{{ asset('asset_template/plugins/pace-progress/themes/yellow/pace-theme-flash.css') }}">
+<link rel="stylesheet" href="{{ asset('asset_template/plugins/pace-progress/themes/purple/pace-theme-corner-indicator.css') }}">
 {{-- pace js --}}
 <script src="{{ asset('asset_template/plugins/pace-progress/pace.min.js') }}"></script>
 {{-- toastr --}}
