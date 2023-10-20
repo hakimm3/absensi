@@ -13,7 +13,7 @@
 {{-- csrf --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
 {{-- pace --}}
-<link rel="stylesheet" href="{{ asset('asset_template/plugins/pace-progress/themes/purple/pace-theme-corner-indicator.css') }}">
+<link rel="stylesheet" href="{{ asset('asset_template/plugins/pace-progress/themes/purple/pace-theme-loading-bar.css') }}">
 {{-- pace js --}}
 <script src="{{ asset('asset_template/plugins/pace-progress/pace.min.js') }}"></script>
 {{-- toastr --}}
