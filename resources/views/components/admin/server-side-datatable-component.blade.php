@@ -3,7 +3,7 @@
         <tr>
             <th style="width: 5%">No</th>
             {{ $columns }}
-            <th style="width: 15%" class="text-center" id="data-table-action">Action</th>
+            <th style="width: 15%" class="text-center none" id="data-table-action">Action</th>
         </tr>
     </thead>
 </table>

@@ -46,22 +46,25 @@
                 @slot('boxBody')
                     <x-admin.client-side-datatable-component id="table" title="Employee Attendance">
                         @slot('columns')
+                            <th>Date</th>
                             <th>Employee No</th>
                             <th>Employee Name</th>
-                            <th>Date</th>
-                            <th>Time In</th>
-                            <th>Max Time In</th>
+                            <th>Absen In</th>
+                            <th>Maximal Absen In</th>
+                            <th>Absen Out</th>
                             <th>Status</th>
+                            <th>Description</th>
                         @endslot
                         @slot('rowData')
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ Carbon\Carbon::parse($item->date)->format('d M Y') }}</td>
                                     <td>{{ $item->user->employee_id }}</td>
                                     <td>{{ $item->user->name }}</td>
-                                    <td>{{ Carbon\Carbon::parse($item->date)->format('d M Y') }}</td>
                                     <td>{{ $item->time_in }}</td>
                                     <td>{{ $item->max_time_in }}</td>
+                                    <td>{{ $item->time_out }}</td>
                                     <td>
                                         @if ($item->status == 'late')
                                             <span class="badge badge-warning">Late</span>
@@ -73,6 +76,7 @@
                                             <span class="badge badge-info"> {{ $item->status }} </span>
                                         @endif
                                     </td>
+                                    <td>{{ $item->description }}</td>
                                     <td> @include('admin.attendance.action') </td>
                                 </tr>
                             @endforeach
@@ -102,12 +106,16 @@
                     <input type="date" name="date" id="date-input" class="form-control" placeholder="Date">
                 </div>
                 <div class="form-group">
-                    <label for="">Time In</label>
+                    <label for="">Absen In</label>
                     <input type="time" name="time_in" id="time_in" class="form-control" placeholder="Time In">
                 </div>
                 <div class="form-group">
-                    <label for="">Max Time In</label>
-                    <input type="time" name="max_time" id="max_time" class="form-control" placeholder="Max Time In">
+                    <label for="">Maximal Absen In</label>
+                    <input type="time" name="max_time_in" id="max_time" class="form-control" placeholder="Max Time In">
+                </div>
+                <div class="form-group">
+                    <label for="">Absen Out</label>
+                    <input type="time" name="time_out" id="time_out" class="form-control" placeholder="Absen Out">
                 </div>
                 <div class="form-group">
                     <label for="">Status</label>
@@ -117,10 +125,15 @@
                         <option value="absent">Absent</option>
                         <option value="late">Late</option>
                         <option value="skd">SKD</option>
+                        <option value="sakit kecelakaan kerja">Sakit Kecelakaan Kerja</option>
                         <option value="cuti tahunan">Cuti Tahunan</option>
                         <option value="cuti istimewa">Cuti Istimewa</option>
                         <option value="rawat inap">Rawat Inap</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 <input type="hidden" name="id" id="id">
             </form>

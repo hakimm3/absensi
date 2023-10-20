@@ -32,7 +32,9 @@
                     $('#date-input').val(data.data.date)
                     $('#time_in').val(data.data.time_in)
                     $('#max_time').val(data.data.max_time_in)
+                    $('#time_out').val(data.data.time_out)
                     $('#status_attendance').val(data.data.status).trigger('change')
+                    $('#description').val(data.data.description)
                 },
                 error: function() {
                     Swal.fire({

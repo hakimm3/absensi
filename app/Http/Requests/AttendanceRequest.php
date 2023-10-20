@@ -25,8 +25,21 @@ class AttendanceRequest extends FormRequest
             'employee_id' => 'required',
             'date' => 'required',
             'time_in' => 'required',
-            'max_time' => 'required',
+            'max_time_in' => 'required',
+            'time_out' => 'nullable',
             'status' => 'required',
+            'description' => 'nullable',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'employee_id.required' => 'Employee ID is required',
+            'date.required' => 'Date is required',
+            'time_in.required' => 'Absen In is required',
+            'max_time_in.required' => 'Maximal Absen in is required',
+            'status.required' => 'Status is required',
         ];
     }
 }

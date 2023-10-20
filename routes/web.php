@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function(){
 
     Route::resource('attendance', App\Http\Controllers\Admin\Attendance\AttendanceController::class)->except('show', 'update', 'create');
     Route::post('attendance/import', ImportAttendanceController::class)->name('attendance.import');
+
+    Route::prefix('setting')->as('setting.')->group(function(){
+        Route::resource('mipo', App\Http\Controllers\Admin\Setting\MipoSettingControlller::class)->except('show', 'update', 'create');
+    });
 });
 
 

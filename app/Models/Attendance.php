@@ -15,6 +15,7 @@ class Attendance extends Model
         'time_out',
         'max_time_in',
         'status',
+        'description',
     ];
 
     public function user()

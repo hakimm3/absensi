@@ -54,11 +54,7 @@ class AttendanceController extends Controller
         $data = Attendance::updateOrCreate([
             'user_id' => $user->id,
             'date' => Carbon::parse($request->date)->format('Y-m-d'),
-        ],[
-            'time_in' => $request->time_in,
-            'max_time_in' => $request->max_time,
-            'status' => $request->status,
-        ]);
+        ],$request->validated());
 
         return response()->json([
             'message' => 'Data saved successfully',

@@ -59,7 +59,7 @@
                         </p>
                     </a>
                 </li>
-
+                @include('layouts.aside.aside-setting')
                 @include('layouts.aside.aside-authorization')
                 @include('layouts.aside.aside-user_management')
                 @include('layouts.aside.aside-securitty')

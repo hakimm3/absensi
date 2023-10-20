@@ -1,4 +1,4 @@
-<div class="modal fade" id="{{ $id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{ $id }}" data-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
