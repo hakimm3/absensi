@@ -24,9 +24,9 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
     public function model(array $row){
     //   dd($row);
         $date = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']));
-        $time_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['time_in']));
-        $max_time_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['max_time_in']));
-        $status = $time_in->gt($max_time_in) ? 'late' : 'present';
+        $absen_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['absen_in']));
+        $max_absen_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['max_absen_in']));
+        $status = $absen_in->gt($max_absen_in) ? 'late' : 'present';
 
 
         $user = User::updateOrCreate(['employee_id' => $row['employee_no']], 
@@ -41,9 +41,11 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
             'user_id' => $user->id,
             'date' => $date->format('Y-m-d'),
         ],[
-            'time_in' => $time_in->format('H:i:s'),
-            'max_time_in' => $max_time_in->format('H:i:s'),
+            'time_in' => $absen_in->format('H:i:s'),
+            'max_time_in' => $max_absen_in->format('H:i:s'),
             'status' => $status,
+            'time_out' => $row['absen_out'] ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['absen_out']))->format('H:i:s') : null,
+            'description' => $row['description'] ?? '',
         ]);
 
     }
@@ -53,8 +55,8 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
         return [
             'employee_name' => 'required',
             'date' => 'required',
-            'time_in' => 'required',
-            'max_time_in' => 'required',
+            'absen_in' => 'required',
+            'max_absen_in' => 'required',
         ];
     }
 
@@ -63,13 +65,13 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
         return [
             'employee_name.required' => 'Name is required',
             'date.required' => 'Date is required|date_format:Y-m-d',
-            'time_in.required' => 'Time in is required|date_format:H:i:s',
-            'max_time_in.required' => 'Max time is required|date_format:H:i:s',
+            'absen_in.required' => 'Time in is required|date_format:H:i:s',
+            'max_absen_in.required' => 'Max time is required|date_format:H:i:s',
         ];
     }
 
     public function headingRow(): int
     {
-        return 5;
+        return 1;
     }
 }
