@@ -13,8 +13,9 @@
                 @slot('boxHeader')
                     <div class="row">
                         <div class="col-2">
-                            <button class="btn btn-outline-primary my-2 mx-2 btn-sm" onclick="create()">Create</button>
-                            <button class="btn btn-outline-warning my-2 btn-sm" onclick="showModalImport()">Import</button>
+                            <button class="btn btn-outline-primary my-2 btn-sm" onclick="create()">Create</button>
+                            <button class="btn btn-outline-warning my-2 mx-2 btn-sm" onclick="showModalImport()">Import</button>
+                            <button class="btn btn-outline-success my-2 btn-sm"><a href="{{ route('employee.attendance.export', request()->query()) }}" class="text-decoration-none text-dark">Export</a></button>
                         </div>
                         <div class="col-10">
                             <form action="">
@@ -44,7 +45,7 @@
                     </div>
                 @endslot
                 @slot('boxBody')
-                    <x-admin.client-side-datatable-component id="table" title="Employee Attendance">
+                    <x-admin.server-side-datatable-component id="table">
                         @slot('columns')
                             <th>Date</th>
                             <th>Employee No</th>
@@ -55,33 +56,7 @@
                             <th>Status</th>
                             <th>Description</th>
                         @endslot
-                        @slot('rowData')
-                            @foreach ($data as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ Carbon\Carbon::parse($item->date)->format('d M Y') }}</td>
-                                    <td>{{ $item->user->employee_id }}</td>
-                                    <td>{{ $item->user->name }}</td>
-                                    <td>{{ $item->time_in }}</td>
-                                    <td>{{ $item->max_time_in }}</td>
-                                    <td>{{ $item->time_out }}</td>
-                                    <td>
-                                        @if ($item->status == 'late')
-                                            <span class="badge badge-warning">Late</span>
-                                        @elseif ($item->status == 'present')
-                                            <span class="badge badge-success">Present</span>
-                                        @elseif ($item->status == 'absent')
-                                            <span class="badge badge-danger">Absent</span>
-                                        @else
-                                            <span class="badge badge-info"> {{ $item->status }} </span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $item->description }}</td>
-                                    <td> @include('admin.employee.attendance.action') </td>
-                                </tr>
-                            @endforeach
-                        @endslot
-                    </x-admin.client-side-datatable-component>
+                    </x-admin.server-side-datatable-component>
                 @endslot
             </x-admin.box-component>
         @endslot

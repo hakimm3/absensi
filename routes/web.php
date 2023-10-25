@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Attendance\ExportAttendanceController;
 use App\Http\Controllers\Admin\Attendance\ImportAttendanceController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function(){
     Route::prefix('employee')->as('employee.')->group(function(){
         Route::resource('attendance', App\Http\Controllers\Admin\Attendance\AttendanceController::class)->except('show', 'update', 'create');
         Route::post('attendance/import', ImportAttendanceController::class)->name('attendance.import');
+        Route::get('attendance/export', ExportAttendanceController::class)->name('attendance.export');
 
         Route::resource('minus-poin', App\Http\Controllers\Admin\Employee\MinusPoinController::class)->except('show', 'update', 'create');
     });

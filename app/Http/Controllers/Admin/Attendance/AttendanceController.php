@@ -19,10 +19,6 @@ class AttendanceController extends Controller
     public function index(Request $request)
     {
         $dates = $request->date ? explode(' - ', $request->date) : [now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')];
-        $request->merge([
-            'start_date' => $dates[0],
-            'end_date' => $dates[1],
-        ]);
         $data = \App\Models\Attendance::query()->with('user')
         ->when($request->date, function ($query, $date) {
             return $query->whereBetween('date', explode(' - ', $date));
@@ -30,7 +26,15 @@ class AttendanceController extends Controller
         ->when($request->status, function ($query, $status) {
             return $query->where('status', $status);
         })
-        ->latest()->get();
+        ->latest();
+
+        if($request->ajax()){
+            return DataTables::eloquent($data)
+            ->addIndexColumn()
+            ->addColumn('action', 'admin.employee.attendance.action')
+            ->rawColumns(['action'])
+            ->make(true);
+        }
 
         $users = User::all();
         return view('admin.employee.attendance.index', compact('data', 'users'));

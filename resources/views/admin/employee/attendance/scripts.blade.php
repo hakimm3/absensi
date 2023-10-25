@@ -50,6 +50,26 @@
         }
     </script>
 
+    <script>
+        $("#table").DataTable({
+            responsive: true,
+            autoWidth: false,
+            serverSide: true,
+            ajax: "",
+            columns: [
+                {data: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'date', name: 'date'},
+                {data: 'user.employee_id', name: 'employee_id'},
+                {data: 'user.name', name: 'name'},
+                {data: 'time_in', name: 'time_in'},
+                {data: 'max_time_in', name: 'max_time_in'},
+                {data: 'time_out', name: 'time_out'},
+                {data: 'status', name: 'status'},
+                {data: 'description', name: 'description'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        })
+    </script>
 
     <script>
         let datepicker = $("#date").daterangepicker({
