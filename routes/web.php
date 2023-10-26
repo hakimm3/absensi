@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function(){
         Route::get('attendance/export', ExportAttendanceController::class)->name('attendance.export');
 
         Route::resource('minus-poin', App\Http\Controllers\Admin\Employee\MinusPoinController::class)->except('show', 'update', 'create');
+        Route::resource('suggestion-system', App\Http\Controllers\Admin\Employee\SuggestionSystemController::class)->except('show', 'update', 'create');
     });
 
 

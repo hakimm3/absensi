@@ -5,14 +5,14 @@
             Employee Minus Poin
         @endslot
         @slot('breadcrumb')
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item">Home</li>
             <li class="breadcrumb-item active"><a href="#">Employee Minus Poin</a></li>
         @endslot
         @slot('content')
             <x-admin.box-component>
                 @slot('boxHeader')
                     <button class="btn btn-outline-primary my-2 mx-2 btn-sm" onclick="create()">Create</button>
-                    <button class="btn btn-outline-warning my-2 btn-sm" onclick="showModalImport()">Import</button>
+                    {{-- <button class="btn btn-outline-warning my-2 btn-sm" onclick="showModalImport()">Import</button> --}}
                 @endslot
                 @slot('boxBody')
                     <x-admin.server-side-datatable-component id="table">

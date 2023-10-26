@@ -14,9 +14,15 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('employee.minus-poin.index') }}" class="nav-link {{ request()->is('employee/mipo') ? 'active' : '' }}">
+        <a href="{{ route('employee.minus-poin.index') }}" class="nav-link {{ request()->is('employee/minus-poin') ? 'active' : '' }}">
           <i class="far fa-circle nav-icon"></i>
           <p>Minus Poin</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ route('employee.suggestion-system.index') }}" class="nav-link {{ request()->is('employee/suggestion-system') ? 'active' : '' }}">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Suggestion System</p>
         </a>
       </li>
     </ul>
