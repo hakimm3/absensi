@@ -5,6 +5,8 @@ namespace App\Imports;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Attendance;
+use App\Models\EmployeeMipo;
+use App\Models\MipoSetting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -28,7 +30,8 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
         $max_absen_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['max_absen_in']));
         $status = $absen_in->gt($max_absen_in) ? 'late' : 'present';
 
-
+        
+        
         $user = User::updateOrCreate(['employee_id' => $row['employee_no']], 
         [
             'name' => $row['employee_name'],
@@ -36,7 +39,8 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
             'email' => "{$row['employee_no']}@example.com",
             'password' => bcrypt($row['employee_no']),
         ]);
-
+        
+        inputMipo($date, $absen_in, $max_absen_in, $user->id);
         return Attendance::updateOrCreate([
             'user_id' => $user->id,
             'date' => $date->format('Y-m-d'),
@@ -74,4 +78,5 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
     {
         return 1;
     }
+
 }

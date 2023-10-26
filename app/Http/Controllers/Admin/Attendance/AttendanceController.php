@@ -60,6 +60,11 @@ class AttendanceController extends Controller
             'date' => Carbon::parse($request->date)->format('Y-m-d'),
         ],$request->validated());
 
+        $date = Carbon::parse($request->date)->format('Y-m-d');
+        $absen_in = Carbon::parse($request->date . ' ' . $request->time_in);
+        $max_absen_in = Carbon::parse($request->date . ' ' . $request->max_time_in);
+        inputMipo($date, $absen_in, $max_absen_in, $user->id);
+
         return response()->json([
             'message' => 'Data saved successfully',
             'data' => $data

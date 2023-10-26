@@ -25,7 +25,7 @@ class MipoSettingSeeder extends Seeder
                 'Ijin Keluar Kantor +1' => -1,
                 'Ijin Bencana Alama' => 0,
                 'Terlambat 1 - 10 Menit' => -0.2,
-                'Terlambat 11 = 20 Menit' => -0.4,
+                'Terlambat 11 - 20 Menit' => -0.4,
                 'Terlambat 20 - 30 Menit' => -0.6,
                 'Terlambat 30 - 60 Menit' => 1,
                 'Terlambat > 60 Menit' => 1.5,
