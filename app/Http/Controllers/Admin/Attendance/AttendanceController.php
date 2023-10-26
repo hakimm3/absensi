@@ -36,6 +36,16 @@ class AttendanceController extends Controller
         if($request->ajax()){
             return DataTables::eloquent($data)
             ->addIndexColumn()
+            ->filterColumn('employee_id', function($query, $keyword){
+                $query->whereHas('user', function($query) use ($keyword){
+                    return $query->where('employee_id', 'like', "%{$keyword}%");
+                });
+            })
+            ->filterColumn('name', function($query, $keyword){
+                $query->whereHas('user', function($query) use ($keyword){
+                    return $query->where('name', 'like', "%{$keyword}%");
+                });
+            })
             ->addColumn('action', 'admin.employee.attendance.action')
             ->rawColumns(['action'])
             ->make(true);
