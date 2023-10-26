@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\EmployeeMipo;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -59,7 +61,30 @@ class HomeController extends Controller
                 ];
             })->values();
 
-            $compact = compact('attendanceResult');
+
+            // report mipo
+            $baseQueryMipo = User::whereHas('mipo')->with('mipo.mipoSetting')->get();
+            // return $baseQueryMipo;
+            $mipoResult = [];
+            foreach ($baseQueryMipo as $key => $value) {
+                $mipoResult [] = [
+                    'name' => $value->name,
+                    'value' => $value->mipo->sum('mipoSetting.value'),
+                ];
+            }
+
+            // report suggestion system
+            $baseQuerySuggestion = User::whereHas('suggestionSystem')->withCount('suggestionSystem')->get();
+            $suggestionResult = [];
+            foreach ($baseQuerySuggestion as $key => $value) {
+                $suggestionResult [] = [
+                    'name' => $value->name,
+                    'value' => $value->suggestion_system_count,
+                ];
+            }
+            
+
+            $compact = compact('attendanceResult', 'mipoResult', 'suggestionResult');
         return view('home', $compact);
     }
 }

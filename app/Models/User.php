@@ -55,4 +55,12 @@ class User extends Authenticatable
     // public function roles(){
     //     return $this->belongsToMany(Role::class);
     // }
+
+    public function mipo(){
+        return $this->hasMany(EmployeeMipo::class);
+    }
+
+    public function suggestionSystem(){
+        return $this->hasMany(SuggestionSystem::class);
+    }
 }
