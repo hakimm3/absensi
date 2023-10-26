@@ -29,6 +29,7 @@
             dataType: "JSON",
             success: function(data) {
                 $('#id').val(data.data.id)
+                $('#employee_id').val(data.data.employee_id)
                 $('#name').val(data.data.name)
                 $('#username').val(data.data.username)
                 $('#email').val(data.data.email)
@@ -60,6 +61,10 @@
                 searchable: false
             },
             {
+                data: 'employee_id',
+                name: 'employee_id',
+            },
+            {
                 data: 'name',
                 name: 'name',
             },
@@ -70,14 +75,6 @@
             {
                 data: 'email',
                 name: 'email'
-            },
-            {
-                data: 'department',
-                name: 'department'
-            },
-            {
-                data: 'photo',
-                name: 'photo'
             },
             {
                 data: 'roles',

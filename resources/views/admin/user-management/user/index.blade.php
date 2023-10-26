@@ -16,11 +16,10 @@
                 @slot('boxBody')
                     <x-admin.server-side-datatable-component id="table">
                         @slot('columns')
+                            <th>Employee No</th>
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Department</th>
-                            <th>Photo</th>
                             <th>Roles</th>
                         @endslot
                     </x-admin.server-side-datatable-component>
@@ -35,6 +34,10 @@
         @endslot
         @slot('modalBody')
             <form action="" id="form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="">Employee No</label>
+                    <input type="text" name="employee_id" id="employee_id" class="form-control" placeholder="Name">
+                </div>
                 <div class="form-group">
                     <label for="">Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Name">
@@ -68,10 +71,6 @@
                             <option value="{{ $role->name }}">{{ $role->name }}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" name="password" id="password" class="form-control">
                 </div>
                 <input type="hidden" name="id" id="id">
             </form>
