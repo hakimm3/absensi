@@ -82,7 +82,7 @@
 
                                         <strong> Department</strong>
 
-                                        <p class="text-muted">{{ auth()->user()->department->name }}</p>
+                                        <p class="text-muted">{{ auth()->user()->department->name ?? '-' }}</p>
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->

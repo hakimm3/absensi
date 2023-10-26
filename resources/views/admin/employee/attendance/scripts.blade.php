@@ -13,7 +13,7 @@
             let url = "{{ route('employee.attendance.store') }}"
             let method = "POST"
             let formData = new FormData($('#form')[0])
-            let isServerSide = false
+            let isServerSide = true
             procesStore(url, method, formData, "#modal-form", "#btn-save", "#table", isServerSide)
         }
 
