@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -10,11 +11,11 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 class AttendanceExport implements FromArray, WithHeadings, WithStyles, ShouldAutoSize
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
     protected $request;
-    public function __construct($request)
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
@@ -23,17 +24,22 @@ class AttendanceExport implements FromArray, WithHeadings, WithStyles, ShouldAut
     {
         $dates = $this->request['date'] ? explode(' - ', $this->request['date']) : [now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')];
         $attendance = \App\Models\Attendance::query()->with('user')
-        ->when($this->request['date'], function ($query, $dates) {
-            return $query->whereBetween('date', explode(' - ', $dates));
-        })
-        ->when($this->request['status'], function ($query, $status) {
-            return $query->where('status', $status);
-        })
-        ->latest()->get();
-        
+            ->when($this->request->employee_id, function ($query, $employee_id) {
+                return $query->whereHas('user', function ($query) use ($employee_id) {
+                    return $query->where('employee_id', $employee_id);
+                });
+            })
+            ->when($this->request->date, function ($query, $date) {
+                return $query->whereBetween('date', explode(' - ', $date));
+            })
+            ->when($this->request->status, function ($query, $status) {
+                return $query->where('status', $status);
+            })
+            ->latest()->get();
+
         $data = [];
         $i = 1;
-        foreach($attendance as $item){
+        foreach ($attendance as $item) {
             $data[] = [
                 'No' => $i++,
                 'Employee ID' => $item->user->employee_id,

@@ -12,15 +12,23 @@
             <x-admin.box-component>
                 @slot('boxHeader')
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-lg-2 col-md-12 col-sm-12">
                             <button class="btn btn-outline-primary my-2 btn-sm" onclick="create()">Create</button>
                             <button class="btn btn-outline-warning my-2 mx-2 btn-sm" onclick="showModalImport()">Import</button>
                             <button class="btn btn-outline-success my-2 btn-sm"><a href="{{ route('employee.attendance.export', request()->query()) }}" class="text-decoration-none text-dark">Export</a></button>
                         </div>
-                        <div class="col-10">
+                        <div class="col-lg-10 col-md-12 col-sm-12">
                             <form action="">
                                 <div class="row my-2">
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-3">
+                                        <select name="employee_id" id="employee_id" class="form-control">
+                                            <option value="">All</option>
+                                            @foreach ($users as $item)
+                                                <option value="{{ $item->employee_id }}" {{ request()->employee_id == $item->employee_id ? 'selected' : '' }}>{{ $item->employee_id }} - {{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
                                         <select name="status" id="status" class="form-control">
                                             <option value="">-- Status --</option>
                                             <option value="">All</option>
@@ -33,10 +41,10 @@
                                             <option value="rawat inap" {{ request()->status == 'rawat inap' ? 'selected' : '' }}>Rawat Inap</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-3">
                                         <input type="text" id="date" name="date" class="form-control">
                                     </div>
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-3">
                                         <button class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>

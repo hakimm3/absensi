@@ -1,6 +1,9 @@
 @include('utils.create')
 @include('utils.store')
 @include('utils.destroy')
+<script src="{{ asset('asset_template/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('asset_template/plugins/daterangepicker/daterangepicker.js') }}"></script>
+
 
 <script>
     function create(){
@@ -58,4 +61,22 @@
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ]
     })
+</script>
+
+<script>
+    let datepicker = $("#date").daterangepicker({
+        singleDatePicker: false,
+        showDropdowns: true,
+        allowClear: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    });
+
+    @if (request()->date)
+        let initialDate = "{{ request()->date }}".split(' - ')
+        let date = initialDate[0] + ' - ' + initialDate[1]
+        datepicker.data('daterangepicker').setStartDate(initialDate[0])
+        datepicker.data('daterangepicker').setEndDate(initialDate[1])
+    @endif
 </script>

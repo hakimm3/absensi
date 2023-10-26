@@ -17,7 +17,15 @@ class MinusPoinController extends Controller
      */
     public function index(Request $request)
     {
-        $data = EmployeeMipo::with('user', 'mipoSetting')->latest();
+        $dates = $request->date ? explode(' - ', $request->date) : [now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')];
+        $data = EmployeeMipo::with('user', 'mipoSetting')
+        ->when($request->date, function ($query, $dates) {
+            return $query->whereBetween('date', explode(' - ', $dates));
+        })
+        ->when($request->user_id, function($query, $user_id){
+            return $query->where('user_id', $user_id);
+        })
+        ->latest();
         if($request->ajax()){
             return DataTables::eloquent($data)
                 ->addIndexColumn()

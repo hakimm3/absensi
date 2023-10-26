@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Employee;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\SuggestionSystem;
 use App\Http\Controllers\Controller;
@@ -14,15 +15,25 @@ class SuggestionSystemController extends Controller
      */
     public function index(Request $request)
     {
+        $dates = $request->date ? explode(' - ', $request->date) : [now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')];
+        $data = SuggestionSystem::with('user')
+        ->when($request->date, function ($query, $dates) {
+            return $query->whereBetween('date', explode(' - ', $dates));
+        })
+        ->when($request->user_id, function($query, $user_id){
+            return $query->where('user_id', $user_id);
+        })
+        ->latest();
         if($request->ajax()){
-            $data = SuggestionSystem::with('user')->latest();
             return datatables()->eloquent($data)
                 ->addIndexColumn()
                 ->addColumn('action', 'admin.employee.suggestion-system.action')
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('admin.employee.suggestion-system.index');
+
+        $users = User::all();
+        return view('admin.employee.suggestion-system.index', compact('users'));
     }
 
 

@@ -13,6 +13,6 @@ class ExportAttendanceController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Excel::download(new \App\Exports\AttendanceExport($request->all()), 'attendance.xlsx');
+        return Excel::download(new \App\Exports\AttendanceExport($request), 'attendance.xlsx');
     }
 }

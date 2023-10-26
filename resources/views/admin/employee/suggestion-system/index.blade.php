@@ -11,7 +11,31 @@
         @slot('content')
             <x-admin.box-component>
                 @slot('boxHeader')
-                    <button class="btn btn-outline-primary my-2 mx-2 btn-sm" onclick="create()">Create</button>
+                <div class="row">
+                    <div class="col-lg-2 col-md-12 col-sm-12">
+                        <button class="btn btn-outline-primary my-2 btn-sm" onclick="create()">Create</button>
+                    </div>
+                    <div class="col-lg-10 col-md-12 col-sm-12">
+                        <form action="">
+                            <div class="row my-2">
+                                <div class="col-md-3">
+                                    <select name="user_id" id="filter_user_id" class="form-control">
+                                        <option value="">All</option>
+                                        @foreach ($users as $item)
+                                            <option value="{{ $item->id }}" {{ request()->user_id == $item->id ? 'selected' : '' }}>{{ $item->employee_id }} - {{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" id="date" name="date" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 @endslot
                 @slot('boxBody')
                     <x-admin.server-side-datatable-component id="table">
@@ -50,6 +74,14 @@
         @endslot
     </x-admin.modal-component>
 @endsection
+@push('css')
+    {{-- select 2 --}}
+    <link rel="stylesheet" href="{{ asset('asset_template/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('asset_template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    {{-- daterange --}}
+    <link rel="stylesheet" href="{{ asset('asset_template/plugins/daterangepicker/daterangepicker.css') }}">
+@endpush
 @push('js')
     @include('admin.employee.suggestion-system.script')
 @endpush
