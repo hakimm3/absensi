@@ -15,7 +15,7 @@ class AttendanceSeeder extends Seeder
         $faker = \Faker\Factory::create();
         for($i= 0; $i<10000; $i++){
             \App\Models\Attendance::create([
-                'user_id' => $faker->numberBetween(1, 100),
+                'user_id' => $faker->numberBetween(1, 60),
                 'date' => $faker->dateTimeBetween('-1 years', 'now'),
                 'time_in' => $faker->time(),
                 'time_out' => $faker->time(),

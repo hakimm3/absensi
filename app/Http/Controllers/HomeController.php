@@ -69,7 +69,7 @@ class HomeController extends Controller
             foreach ($baseQueryMipo as $key => $value) {
                 $mipoResult [] = [
                     'name' => $value->name,
-                    'value' => $value->mipo->sum('mipoSetting.value'),
+                    'value' => abs($value->mipo->sum('mipoSetting.value')),
                 ];
             }
 

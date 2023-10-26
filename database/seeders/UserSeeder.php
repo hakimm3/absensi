@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             \App\Models\User::create($value);
         }
 
-        $faker = \Faker\Factory::create();
+        $faker = \Faker\Factory::create('id_ID');
         for($i= 0; $i<100; $i++){
             \App\Models\User::create([
                 'department_id' => $faker->numberBetween(1, 10),
