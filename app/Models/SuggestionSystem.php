@@ -17,7 +17,7 @@ class SuggestionSystem extends Model
 
     public function scopeMp($query)
     {
-        if(auth()->user()->hasRole('MP')){
+        if(auth()->user()->hasRole('mp')){
             return $query->where('user_id', auth()->user()->id);
         }
     }

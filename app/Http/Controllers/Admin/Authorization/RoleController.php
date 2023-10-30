@@ -30,8 +30,9 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
         ]);
 
+        $name = strtolower($request->name);
         Role::updateOrCreate(['id' => $request->id], [
-            'name' => $request->name,
+            'name' => $name,
             'guard_name' => 'web',
         ]);
 

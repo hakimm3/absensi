@@ -56,7 +56,10 @@
             },
             {
                 data: 'name',
-                name: 'name'
+                name: 'name',
+                render: function(data, type, row) {
+                    return data.toUpperCase()
+                }
             },
             {
                 data: 'action',

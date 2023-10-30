@@ -21,7 +21,7 @@ class Attendance extends Model
     // if auth user is mp then show attendance of mp only
     public function scopeMp($query)
     {
-        if(auth()->user()->hasRole('MP')){
+        if(auth()->user()->hasRole('mp')){
             return $query->where('user_id', auth()->user()->id);
         }
     }
