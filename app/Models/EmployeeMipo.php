@@ -15,6 +15,13 @@ class EmployeeMipo extends Model
         'description',
     ];
 
+    public function scopeMp($query)
+    {
+        if(auth()->user()->hasRole('MP')){
+            return $query->where('user_id', auth()->user()->id);
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

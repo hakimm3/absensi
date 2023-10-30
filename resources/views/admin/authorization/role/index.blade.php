@@ -40,6 +40,7 @@
                     <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                 </div>
                 <input type="hidden" name="id" id="id">
+            </form>
             @endslot
     </x-admin.modal-component>
 @endsection

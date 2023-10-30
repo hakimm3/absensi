@@ -31,11 +31,15 @@ class AttendanceController extends Controller
         ->when($request->status, function ($query, $status) {
             return $query->where('status', $status);
         })
+        ->mp()
         ->latest();
 
         if($request->ajax()){
             return DataTables::eloquent($data)
             ->addIndexColumn()
+            ->addColumn('date', function($row){
+                return Carbon::parse($row->date)->format('l, d M y');
+            })
             ->filterColumn('employee_id', function($query, $keyword){
                 $query->whereHas('user', function($query) use ($keyword){
                     return $query->where('employee_id', 'like', "%{$keyword}%");

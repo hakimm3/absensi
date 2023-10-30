@@ -23,6 +23,7 @@ class SuggestionSystemController extends Controller
         ->when($request->user_id, function($query, $user_id){
             return $query->where('user_id', $user_id);
         })
+        ->mp()
         ->latest();
         if($request->ajax()){
             return datatables()->eloquent($data)
