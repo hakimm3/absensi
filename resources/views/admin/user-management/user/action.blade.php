@@ -2,7 +2,7 @@
     <i class="fa fa-edit"></i>
  </button>
  
- <button class="btn btn-sm btn-outline-danger" onclick="destroy({{ $id }})">
+ <button class="btn btn-sm btn-outline-danger" onclick="destroy('{{ route('user-management.users.destroy', $id) }}', '#table', true)">
      <i class="fa fa-trash"></i>
   </button>
   
