@@ -29,22 +29,21 @@ class AttendanceImport implements ToModel, WithHeadingRow, WithValidation, Skips
         $date = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']));
         $absen_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['absen_in']));
         $max_absen_in = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['max_absen_in']));
-        $status = $absen_in->gt($max_absen_in) ? 'late' : 'present';
+        $lateOrNot = $absen_in->gt($max_absen_in) ? 'late' : 'present';
 
 
+        $user = User::firstOrCreate(
+            ['employee_id' => $row['employee_no']],
+            [
+                'name' => $row['employee_name'],
+                'username' => $row['employee_no'],
+                'email' => "{$row['employee_no']}@example.com",
+                'password' => bcrypt($row['employee_no']),
+            ]
+        );
 
-        $user = User::where('employee_id', $row['employee_no'])->first();
-        if (!$user) {
-            $user = User::create(
-                ['employee_id' => $row['employee_no']],
-                [
-                    'name' => $row['employee_name'],
-                    'username' => $row['employee_no'],
-                    'email' => "{$row['employee_no']}@example.com",
-                    'password' => bcrypt($row['employee_no']),
-                ]
-            );
-        }
+        $statusFromExcel = strtolower($row['status']);
+        $status = $statusFromExcel ? $statusFromExcel : $lateOrNot;
 
         inputMipo($date, $absen_in, $max_absen_in, $user->id);
         return Attendance::updateOrCreate([

@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             // PermissionSeeder::class,
             MipoSettingSeeder::class,
-            AttendanceSeeder::class,
-            SuggestionSystemSeeder::class,
-            MipoEmployeeSeeder::class,
+            // AttendanceSeeder::class,
+            // SuggestionSystemSeeder::class,
+            // MipoEmployeeSeeder::class,
         ]);
     }
 }
