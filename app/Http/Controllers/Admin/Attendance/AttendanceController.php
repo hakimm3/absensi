@@ -19,7 +19,7 @@ class AttendanceController extends Controller
     public function index(Request $request)
     {
         $dates = $request->date ? explode(' - ', $request->date) : [now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')];
-        $data = \App\Models\Attendance::query()->with('user')
+        $data = \App\Models\Attendance::whereHas('user')->with('user')
         ->when($request->employee_id, function($query, $employee_id){
             return $query->whereHas('user', function($query) use ($employee_id){
                 return $query->where('employee_id', $employee_id);
