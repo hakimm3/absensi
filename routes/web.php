@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function(){
         Route::get('attendance/export', ExportAttendanceController::class)->name('attendance.export');
 
         Route::resource('minus-poin', App\Http\Controllers\Admin\Employee\MinusPoinController::class)->except('show', 'update', 'create');
+        Route::post('minus-poin/import', App\Http\Controllers\Admin\Employee\ImportEmployeeMipoController::class)->name('minus-poin.import');
+        Route::get('minus-poin/export', App\Http\Controllers\Admin\Employee\ExportEmployeeMipoController::class)->name('minus-poin.export');
+
         Route::resource('suggestion-system', App\Http\Controllers\Admin\Employee\SuggestionSystemController::class)->except('show', 'update', 'create');
     });
 

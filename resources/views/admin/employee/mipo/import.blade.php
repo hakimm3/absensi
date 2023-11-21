@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="importModalLabel">Import Attendance</h5>
+                <h5 class="modal-title" id="importModalLabel">Import Employee Minus Poin</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -10,8 +10,9 @@
             <div class="modal-body">
                 <form action="" id="form" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="">File</label>
+                        <label for="">Files</label>
                         <input type="file" name="file" id="file" class="form-control" placeholder="File">
+                        <p class="mt-2">Template File click <a href="https://docs.google.com/spreadsheets/d/1B_fNq4vKihRIZ8orToh3PM0qEJZXvZEJ5fFE5FUqkTg/edit?usp=sharing" target="_blank">Here</a></p>
                     </div>
                 </form>
             </div>
@@ -48,7 +49,7 @@
             formData.append('file', $('#file').prop('files')[0] ?? '')
 
                 $.ajax({
-                url: "{{ route('employee.attendance.import') }}",
+                url: "{{ route('employee.minus-poin.import') }}",
                 type: "POST",
                 dataType: "JSON",
                 data: formData,

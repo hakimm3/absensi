@@ -14,6 +14,8 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-12 col-sm-12">
                             <button class="btn btn-outline-primary my-2 btn-sm" onclick="create()">Create</button>
+                            <button class="btn btn-outline-warning my-2 mx-2 btn-sm" onclick="showModalImport()">Import</button>
+                            <button class="btn btn-outline-success my-2 btn-sm"><a href="{{ route('employee.attendance.export', request()->query()) }}" class="text-decoration-none text-dark">Export</a></button>
                         </div>
                         <div class="col-lg-10 col-md-12 col-sm-12">
                             <form action="">
@@ -90,6 +92,7 @@
             </form>
         @endslot
     </x-admin.modal-component>
+    @include('admin.employee.mipo.import')
 @endsection
 @push('css')
     {{-- select 2 --}}
