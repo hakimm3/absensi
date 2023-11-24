@@ -23,6 +23,6 @@ class MipoEmployeeSeeder extends Seeder
         // }\
 
         //remove attendace date from september 2023 to november 2023
-        EmployeeMipo::whereBetween('date', ['2023-09-01', '2023-11-30'])->delete();
+        EmployeeMipo::where('date', '2023-03-20')->delete();
     }
 }
