@@ -12,21 +12,28 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = [
-            [   
-                // 'department_id' => 1,
-                'name' => 'Admin',
-                'username' => 'admin',
-                'email' => 'admin@gmail.com',
-                'password' => bcrypt('password'),
-                'photo' => 'default.png',
-                'employee_id' => '00000000',
-            ]
-        ];
 
-        foreach ($data as $key => $value) {
-            \App\Models\User::create($value);
-        }
+        //set all user password to password
+        \App\Models\User::all()->each(function ($user) {
+            $user->password = bcrypt('password');
+            $user->save();
+        });
+
+        // $data = [
+        //     [   
+        //         // 'department_id' => 1,
+        //         'name' => 'Admin',
+        //         'username' => 'admin',
+        //         'email' => 'admin@gmail.com',
+        //         'password' => bcrypt('password'),
+        //         'photo' => 'default.png',
+        //         'employee_id' => '00000000',
+        //     ]
+        // ];
+
+        // foreach ($data as $key => $value) {
+        //     \App\Models\User::create($value);
+        // }
 
         // $faker = \Faker\Factory::create('id_ID');
         // for($i= 0; $i<100; $i++){
