@@ -21,6 +21,7 @@
             </div>
             <div class="info">
                 <a href="{{ route('profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
+                <h3>{{  implode(', ', auth()->roles->pluck('name')->toArray()) }}</h3>
             </div>
         </div>
 

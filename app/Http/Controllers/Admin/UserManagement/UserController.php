@@ -22,10 +22,7 @@ class UserController extends Controller
                     return $row->department->name ?? '-';
                 })
                 ->addColumn('roles', function ($row) {
-                    $roles = '';
-                    foreach ($row->roles as $role) {
-                        $roles .= $role->name . ', ';
-                    }
+                    $roles = implode(', ', $row->roles->pluck('name')->toArray());
                     return $roles;
                 })
                 ->addColumn('photo', function ($row) {
