@@ -65,7 +65,7 @@ class HomeController extends Controller
 
             // report mipo
             $baseQueryMipo = User::whereHas('mipo')->with('mipo.mipoSetting')
-            ->mp()
+            ->where('id', auth()->user()->id)
             ->get();
             // return $baseQueryMipo;
             $mipoResult = [];
@@ -78,7 +78,7 @@ class HomeController extends Controller
 
             // report suggestion system
             $baseQuerySuggestion = User::whereHas('suggestionSystem')->withCount('suggestionSystem')
-            ->mp()
+            ->where('id', auth()->user()->id)
             ->get();
             $suggestionResult = [];
             foreach ($baseQuerySuggestion as $key => $value) {
