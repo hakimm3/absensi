@@ -13,13 +13,16 @@ class MipoEmployeeSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = \Faker\Factory::create('id_ID');
-        for($i = 0; $i < 1000; $i++){
-            EmployeeMipo::create([
-                'user_id' => $faker->numberBetween(1, 60),
-                'mipo_setting_id' => $faker->numberBetween(1, 20),
-                'date' => $faker->dateTimeBetween('-1 years', 'now'),
-            ]);
-        }
+        // $faker = \Faker\Factory::create('id_ID');
+        // for($i = 0; $i < 1000; $i++){
+        //     EmployeeMipo::create([
+        //         'user_id' => $faker->numberBetween(1, 60),
+        //         'mipo_setting_id' => $faker->numberBetween(1, 20),
+        //         'date' => $faker->dateTimeBetween('-1 years', 'now'),
+        //     ]);
+        // }\
+
+        //remove attendace date from september 2023 to november 2023
+        EmployeeMipo::whereBetween('date', ['2023-09-01', '2023-11-30'])->delete();
     }
 }
