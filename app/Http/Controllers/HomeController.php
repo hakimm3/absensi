@@ -27,12 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $baseQueryAttendance = Attendance::query();
+        $baseQueryAttendance = Attendance::mp()->query();
         // group by attendance by month and year and count the attendance by status (present, late, absent)
         $attendance = $baseQueryAttendance->whereYear('date', 2023)->orderBy('date')->selectRaw('DATE_FORMAT(date, "%M %Y") as month_year, status, count(*) as total')
             ->groupBy('month_year', 'status')
             ->orderBy('month_year', 'desc')
-            ->mp()
             ->get();
 
             $attendanceResult = [];
