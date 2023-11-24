@@ -32,6 +32,7 @@ class HomeController extends Controller
         $attendance = $baseQueryAttendance->whereYear('date', 2023)->orderBy('date')->selectRaw('DATE_FORMAT(date, "%M %Y") as month_year, status, count(*) as total')
             ->groupBy('month_year', 'status')
             ->orderBy('month_year', 'desc')
+            ->mp()
             ->get();
 
             $attendanceResult = [];
@@ -63,7 +64,9 @@ class HomeController extends Controller
 
 
             // report mipo
-            $baseQueryMipo = User::whereHas('mipo')->with('mipo.mipoSetting')->get();
+            $baseQueryMipo = User::whereHas('mipo')->with('mipo.mipoSetting')
+            ->mp()
+            ->get();
             // return $baseQueryMipo;
             $mipoResult = [];
             foreach ($baseQueryMipo as $key => $value) {
@@ -74,7 +77,9 @@ class HomeController extends Controller
             }
 
             // report suggestion system
-            $baseQuerySuggestion = User::whereHas('suggestionSystem')->withCount('suggestionSystem')->get();
+            $baseQuerySuggestion = User::whereHas('suggestionSystem')->withCount('suggestionSystem')
+            ->mp()
+            ->get();
             $suggestionResult = [];
             foreach ($baseQuerySuggestion as $key => $value) {
                 $suggestionResult [] = [
