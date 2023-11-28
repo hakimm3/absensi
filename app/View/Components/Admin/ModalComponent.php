@@ -12,9 +12,11 @@ class ModalComponent extends Component
      * Create a new component instance.
      */
     protected $id;
-    public function __construct($id)
+    protected $size;
+    public function __construct($id, $size = '')
     {
         $this->id = $id;
+        $this->size = $size;
     }
 
     /**
@@ -24,6 +26,7 @@ class ModalComponent extends Component
     {
         return view('components.admin.modal-component', [
             'id' => $this->id,
+            'size' => $this->size,
         ]);
     }
 }
