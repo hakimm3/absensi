@@ -63,8 +63,9 @@ class HomeController extends Controller
 
 
             // report mipo
-            $baseQueryMipo = User::whereHas('mipo')->with('mipo.mipoSetting')
-            ->where('id', auth()->user()->id)
+            $baseQueryMipo = User::whereHas('mipo')->with(['mipo.mipoSetting', 'mipo' => function ($query) {
+                $query->mp();
+            }])
             ->get();
             // return $baseQueryMipo;
             $mipoResult = [];
@@ -76,16 +77,15 @@ class HomeController extends Controller
             }
 
             // report suggestion system
-            $baseQuerySuggestion = User::whereHas('suggestionSystem')->withCount('suggestionSystem')
-            ->where('id', auth()->user()->id)
-            ->get();
+            // $baseQuerySuggestion = User::whereHas('suggestionSystem')->withCount('suggestionSystem')
+            // ->get();
             $suggestionResult = [];
-            foreach ($baseQuerySuggestion as $key => $value) {
-                $suggestionResult [] = [
-                    'name' => $value->name,
-                    'value' => $value->suggestion_system_count,
-                ];
-            }
+            // foreach ($baseQuerySuggestion as $key => $value) {
+            //     $suggestionResult [] = [
+            //         'name' => $value->name,
+            //         'value' => $value->suggestion_system_count,
+            //     ];
+            // }
             
 
             $compact = compact('attendanceResult', 'mipoResult', 'suggestionResult');

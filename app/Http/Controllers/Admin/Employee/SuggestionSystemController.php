@@ -16,7 +16,7 @@ class SuggestionSystemController extends Controller
     public function index(Request $request)
     {
         $dates = $request->date ? explode(' - ', $request->date) : [now()->startOfMonth()->format('Y-m-d'), now()->endOfMonth()->format('Y-m-d')];
-        $data = SuggestionSystem::with('user')
+        $data = SuggestionSystem::with('pengaju', 'evaluator')
         ->when($request->date, function ($query, $dates) {
             return $query->whereBetween('date', explode(' - ', $dates));
         })

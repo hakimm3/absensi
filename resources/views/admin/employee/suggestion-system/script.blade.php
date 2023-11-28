@@ -54,10 +54,15 @@
         ajax: "",
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            { data: 'date', name: 'date' },
-            { data: 'user.name', name: 'user.name'},
-            { data: 'suggestion', name: 'suggestion' },
-            { data: 'benefits', name: 'benefits' },
+            { data: 'pengaju.name', name: 'pengaju.name'},
+            { data: 'tanggal_pengajuan', name: 'tanggal_pengajuan'},
+            { data: 'tema', name: 'tema'},
+            { data: 'kategori', name: 'kategori'},
+            { data: 'text_masalah', name: 'text_masalah'},
+            { data: 'analisa', name: 'analisa'},
+            { data: 'perbaikan', name: 'perbaikan'},
+            { data: 'text_evaluasi', name: 'text_evaluasi'},
+            { data: 'evaluator.name', name: 'evaluator.name'},
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ]
     })

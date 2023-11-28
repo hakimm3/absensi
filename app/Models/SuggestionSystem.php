@@ -9,21 +9,34 @@ class SuggestionSystem extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
-        'date',
-        'suggestion',
-        'benefits',
+        'pengaju_id',
+        'evaluator_id',
+        'tanggal_pengajuan',
+        'tema',
+        'kategori',
+        'text_masalah',
+        'file_masalah',
+        'analisa',
+        'perbaikan',
+        'text_evaluasi',
+        'file_evaluasi',
+        'tanggal_evaluasi',
     ];
 
     public function scopeMp($query)
     {
         if(auth()->user()->hasRole('mp')){
-            return $query->where('user_id', auth()->user()->id);
+            return $query->where('pengaju_id', auth()->user()->id);
         }
     }
 
-    public function user()
+    public function pengaju()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengaju_id');
+    }
+
+    public function evaluator()
+    {
+        return $this->belongsTo(User::class, 'evaluator_id');
     }
 }

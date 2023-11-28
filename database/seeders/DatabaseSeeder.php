@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             MipoSettingSeeder::class,
             // AttendanceSeeder::class,
             // SuggestionSystemSeeder::class,
-            // MipoEmployeeSeeder::class,
+            MipoEmployeeSeeder::class,
         ]);
     }
 }

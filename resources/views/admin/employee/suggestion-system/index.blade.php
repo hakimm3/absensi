@@ -40,10 +40,15 @@
                 @slot('boxBody')
                     <x-admin.server-side-datatable-component id="table">
                         @slot('columns')
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Suggestion</th>
-                            <th>Benefits</th>
+                            <th>Diajukan Oleh</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Tema</th>
+                            <th>Kategori</th>
+                            <th>Masalah</th>
+                            <th>Analisa</th>
+                            <th>Perbaikan</th>
+                            <th>Evaluasi</th>
+                            <th>Evalusai Oleh</th>
                         @endslot
                     </x-admin.server-side-datatable-component>
                 @endslot
@@ -61,12 +66,37 @@
                     <input type="date" name="date" id="date" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="suggestion">Suggestion</label>
-                    <textarea name="suggestion" id="suggestion" cols="30" rows="3" class="form-control"></textarea>
+                    <label for="tema">Tema</label>
+                    <input type="text" name="tema" id="tema" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="benefits">Benefits</label>
-                    <textarea name="benefits" id="benefits" cols="30" rows="10" class="form-control"></textarea>
+                    <label for="kategori">kategori</label>
+                    <select name="kategori" id="kategori" class="form-control">
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="standard">Standard</option>
+                        <option value="modifikasi">Modifikasi</option>
+                        <option value="inovasi">Inovasi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="text_masalah">Masalah</label>
+                    <textarea name="text_masalah" id="text_masalah" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="file_masalah">Masalah</label>
+                    <input type="file" name="file_masalah" id="file_masalah" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="analisa">Analisa</label>
+                    <textarea name="analisa" id="analisa" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="perbaikan">Perbaikan</label>
+                    <textarea name="perbaikan" id="perbaikan" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="analisa">Analisa</label>
+                    <textarea name="analisa" id="analisa" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 <input type="hidden" id="id" name="id">
                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">

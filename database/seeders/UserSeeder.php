@@ -14,10 +14,10 @@ class UserSeeder extends Seeder
     {
 
         //set all user password to password
-        \App\Models\User::all()->each(function ($user) {
-            $user->password = bcrypt('password');
-            $user->save();
-        });
+        // \App\Models\User::all()->each(function ($user) {
+        //     $user->password = bcrypt('password');
+        //     $user->save();
+        // });
 
         // $data = [
         //     [   
@@ -35,17 +35,17 @@ class UserSeeder extends Seeder
         //     \App\Models\User::create($value);
         // }
 
-        // $faker = \Faker\Factory::create('id_ID');
-        // for($i= 0; $i<100; $i++){
-        //     \App\Models\User::create([
-        //         'department_id' => $faker->numberBetween(1, 10),
-        //         'employee_id' => $faker->numberBetween(10000000, 99999999),
-        //         'name' => $faker->name(),
-        //         'username' => $faker->userName() . $i,
-        //         'email' => $faker->email() . $i,
-        //         'password' => bcrypt('password'),
-        //         'photo' => 'default.png',
-        //     ]);
-        // }
+        $faker = \Faker\Factory::create('id_ID');
+        for($i= 0; $i<60; $i++){
+            \App\Models\User::create([
+                'department_id' => $faker->numberBetween(1, 10),
+                'employee_id' => $faker->numberBetween(10000000, 99999999),
+                'name' => $faker->name(),
+                'username' => $faker->userName() . $i,
+                'email' => $faker->email() . $i,
+                'password' => bcrypt('password'),
+                'photo' => 'default.png',
+            ]);
+        }
     }
 }
