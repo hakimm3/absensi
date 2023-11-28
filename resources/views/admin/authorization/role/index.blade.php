@@ -29,7 +29,7 @@
         @endslot
     </x-admin.layout-component>
 
-    <x-admin.modal-component id="modal-form">
+    <x-admin.modal-component id="modal-form" size="modal-lg">
         @slot('modalTitle')
             Add Roles
         @endslot
