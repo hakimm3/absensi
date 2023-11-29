@@ -43,7 +43,17 @@ class SuggestionSystemController extends Controller
      */
     public function store(SuggestionSystemRequest $request)
     {
-        SuggestionSystem::updateOrCreate(['id' => $request->id], $request->validated());
+        $data = SuggestionSystem::updateOrCreate(['id' => $request->id], $request->validated());
+        if($request->file_masalah){
+            $fileMasalahName = uploadPhoto($request->file_masalah, 'suggestion-system');
+            $data->update(['file_masalah' => $fileMasalahName]);
+        }
+
+        if($request->file_evaluasi){
+            $fileEvaluasiName = uploadPhoto($request->file_evaluasi, 'suggestion-system');
+            $data->update(['file_evaluasi' => $fileEvaluasiName]);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Suggestion System saved successfully.'
@@ -56,7 +66,7 @@ class SuggestionSystemController extends Controller
      */
     public function edit(string $id)
     {
-        $suggestionSystem = SuggestionSystem::find($id);
+        $suggestionSystem = SuggestionSystem::with('pengaju')->find($id);
         return response()->json([
             'success' => true,
             'data' => $suggestionSystem

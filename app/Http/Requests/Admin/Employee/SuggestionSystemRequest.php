@@ -22,10 +22,17 @@ class SuggestionSystemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'date' => 'required',
-            'suggestion' => 'required|string',
-            'benefits' => 'required|string',
+            'pengaju_id' => ['required', 'integer'],
+            'evaluator_id' => ['nullable', 'integer'],
+            'tanggal_pengajuan' => ['required', 'date'],
+            'tema' => ['required', 'string'],
+            'kategori' => ['required', 'string'],
+            'text_masalah' => ['required', 'string'],
+            'file_masalah' => ['nullable'],
+            'analisa' => ['required', 'string'],
+            'perbaikan' => ['required', 'string'],
+            'text_evaluasi' => ['nullable', 'string'],
+            'file_evaluasi' => ['nullable', 'string'],
         ];
     }
 }

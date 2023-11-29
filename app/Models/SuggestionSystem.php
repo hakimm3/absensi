@@ -20,7 +20,6 @@ class SuggestionSystem extends Model
         'perbaikan',
         'text_evaluasi',
         'file_evaluasi',
-        'tanggal_evaluasi',
     ];
 
     public function scopeMp($query)
